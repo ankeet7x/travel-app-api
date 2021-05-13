@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'views/home.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Travel App",
-      home: Home(),
+      home: HomeView(),
     );
   }
 }

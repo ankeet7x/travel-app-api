@@ -10,7 +10,8 @@ router.post('/', (req, res, next) => {
 		_id: mongoose.Types.ObjectId(),
 		place: req.body.place,
 		bookedBy: req.body.bookedBy,
-		date: req.body.date
+		date: req.body.date,
+		price: req.body.price
 	});
 	bookingScene.save().then((doc) => {
 		res.status(200).json({

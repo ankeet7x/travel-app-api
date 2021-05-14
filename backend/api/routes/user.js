@@ -7,7 +7,7 @@ const saltRounds = 10;
 
 //signupuser
 router.post('/signup', (req, res, next) => {
-	User.findOne({username: req.body.username}).exec().then((user) => {
+	User.findOne({username: req.body.userName}).exec().then((user) => {
 		if (user != null){
 			return res.status(500).json({
 				message: "userAlreadyExists"
@@ -20,17 +20,17 @@ router.post('/signup', (req, res, next) => {
  					});
  				}else{
  					const userData = User({
-				firstName: req.body.firstName,
-				lastName: req.body.lastName,
-				userName: req.body.userName,
-				password: hash,
-				phoneNumber: req.body.phoneNumber
-			});
+						firstName: req.body.firstName,
+						lastName: req.body.lastName,
+						userName: req.body.userName,
+						password: hash,
+						phoneNumber: req.body.phoneNumber
+					});
  					userData.save().then((user) => {
  						res.status(200).json({
  							message: 'userCreated',
  							user: user
- 						})
+ 						});
  					}).catch((err) => {
  						res.status(500).json({
  							err: err.message
@@ -44,6 +44,22 @@ router.post('/signup', (req, res, next) => {
 		res.status(500).json({
 			error: err.message
 		});
+	});
+});
+
+//Get all Users
+router.get('/', (req, res, next) => {
+	User.find().exec().then((users) => {
+		res.status(200).json({
+			message: "usersFetched",
+			noOfUsers: users.length,
+			users: users
+		})
+	}).catch((err) => {
+		res.status(500).json({
+    		message: "unableToFetchUsers",
+    		cause: err.message
+    	});
 	});
 });
 
@@ -68,15 +84,15 @@ router.post("/login", (req, res, next) => {
     		}
     		return res.status(500).json({
     				message: "authFailed"
-    			});
-});
+    		});
+		});
 	}).catch((err) => {
 		res.status(500).json({
- 							err: err.message,
- 							message: "userNotFound"
- 						});
-	})
-})
+ 			err: err.message,
+ 				message: "userNotFound"
+ 		});
+	});
+});
 
 
 
